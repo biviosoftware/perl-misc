@@ -14,6 +14,7 @@ unixtime - convert between integer and string time formats
   unixtime '1/1/99 23:11:11'
   unixtime 'Wed Jan 14 23:50:34 1999'
   unixtime '2451666 79199'
+  unixtime 2451666 79199
 
 =head1 DESCRIPTION
 
@@ -34,7 +35,8 @@ the unix epoch.  The date may be followed by a time in 24 hour format.
 
 =item -gmt
 
-print output in GMT.
+print output in GMT (default is local).  If Bivio::Type::Date, then
+will always print gmt.
 
 =back
 
@@ -61,19 +63,22 @@ if ($ARGV[0] =~ /^-g(mt)?$/) {
     $GMT++;
     shift(@ARGV);
 }
-my($t);
-foreach $t (@ARGV) {
+while (@ARGV) {
+    my($t) = shift(@ARGV);
     my(@args);
     # String of digits is assumed to be unix time.  If there are more
     # than 10 digits, then it is assumed to be (java) milliseconds,
     # strip last 3 digits.
-    if ($t =~ /^\d+$/) {
+    if ($t =~ /^\d{7}$/ && @ARGV == 1 && $ARGV[0] =~ /^\d{1,5}$/) {
+	$t .= ' ' . shift(@ARGV);
+    }
+    elsif ($t =~ /^\d+$/) {
 	length($t) > 10 && $t =~ s/...$//;
 	print scalar($GMT ? gmtime($t) : localtime($t)), "\n";
 	next;
     }
     if ($t =~ /^\d+ \d+$/) {
-	my($m) = $GMT ? 'to_string' : 'to_local_string';
+	my($m) = $GMT || $t =~ / 79199$/ ? 'to_string' : 'to_local_string';
 	print Bivio::Type::DateTime->$m($t), "\n";
 	next;
     }
