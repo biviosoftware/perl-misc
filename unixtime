@@ -13,6 +13,7 @@ unixtime - convert between integer and string time formats
   unixtime 123456789
   unixtime '1/1/99 23:11:11'
   unixtime 'Wed Jan 14 23:50:34 1999'
+  unixtime '2451666 79199'
 
 =head1 DESCRIPTION
 
@@ -52,6 +53,7 @@ Rob Nagler <nagler@bivio.com>
 =cut
 
 use Time::Local qw(timelocal timegm);
+use Bivio::Type::DateTime;
 
 @ARGV || die("usage: unixtime [-gmt] times...\n");
 my($GMT) = 0;
@@ -68,6 +70,10 @@ foreach $t (@ARGV) {
     if ($t =~ /^\d+$/) {
 	length($t) > 10 && $t =~ s/...$//;
 	print scalar($GMT ? gmtime($t) : localtime($t)), "\n";
+	next;
+    }
+    if ($t =~ /^\d+ \d+$/) {
+	print Bivio::Type::DateTime->to_string($t), "\n";
 	next;
     }
     # 1/1/99 or 1/1/1999 or <date> 1:1:1 (24 hour only)
