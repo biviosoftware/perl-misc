@@ -69,7 +69,7 @@ while (@ARGV) {
     # String of digits is assumed to be unix time.  If there are more
     # than 10 digits, then it is assumed to be (java) milliseconds,
     # strip last 3 digits.
-    if ($t =~ /^\d{7}$/ && @ARGV == 1 && $ARGV[0] =~ /^\d{1,5}$/) {
+    if ($t =~ /^\d{7}$/ && @ARGV && $ARGV[0] =~ /^\d{1,5}$/) {
 	$t .= ' ' . shift(@ARGV);
     }
     elsif ($t =~ /^\d+$/) {
