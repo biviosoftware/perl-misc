@@ -2,7 +2,6 @@
 #
 # $Id$
 #
-# usage: $0 [-l] [-i] [-z] $PATTERN [@DIRS]
 # Recursively search directories for text files for the pattern passed
 # on the command line.  If @DIRS is empty, use ".".  Skips SCCS/RCS
 # directories and symlinks.  Lists the files only with -l or prints
@@ -40,11 +39,12 @@ sub usage { # $MSG
     ($prog = $0) =~ s,.*/,,;
     print <<EOF;
 $prog: $_[$[]
-usage: $prog [-l] [-i] perl-regex [dirs]
+usage: $prog [options] perl-regex [dirs]
 	-l = display filenames only
 	-i = ignore case
 	-r = recurse through subdirectories (default)
 	-R = don't recurse through subdirectories
+        -z = also search in .Z and .gz compressed files
 EOF
     exit(1);
 } # usage
