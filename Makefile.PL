@@ -5,5 +5,5 @@ use ExtUtils::MakeMaker;
 WriteMakefile(
     'NAME' => 'misc',
     'VERSION' => '0.1',
-    'EXE_FILES' => ['unixtime', 'mail-from-stats', 'csv2html'],
+    'EXE_FILES' => ['unixtime', 'mail-from-stats', 'csv2html', 'trgrep'],
 );
