@@ -1292,7 +1292,8 @@ sub get_list_from_depot {
 
    push (@chain, $start);
    while ( ($start = $t?$bbd[$start]:$sbd[$start]) <= $threshold ) {
-       die if $count++ > 10000;
+       die($infilename, ": probable corrupt document")
+	   if $count++ > 10000;
        push(@chain, $start);
    }
    @chain;
