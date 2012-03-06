@@ -1286,11 +1286,14 @@ sub get_list_from_depot {
 #
    local($start, $t)=@_;
    local(@chain)=();
-   return @chain if $start == 0xfffffffe;
+   local($count)=0;
+   local($threshold)=0xffffffff - 0x100;
+   return @chain if $start >= $threshold;
 
    push (@chain, $start);
-   while ( ($start = $t?$bbd[$start]:$sbd[$start]) != 0xfffffffe ) {
-      push(@chain, $start);
+   while ( ($start = $t?$bbd[$start]:$sbd[$start]) <= $threshold ) {
+       die if $count++ > 10000;
+       push(@chain, $start);
    }
    @chain;
 }
