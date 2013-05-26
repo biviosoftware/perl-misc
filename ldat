@@ -505,7 +505,7 @@ sub cmp_list {
 
 sub mystd {
    local($opts)=shift;
-   $|=1; $[=0;
+   $|=1;
    if (!$sys_os) {
       # If sys_os is not set explicitly: 
       #    assume a dos system, if some standard /etc/file not present.

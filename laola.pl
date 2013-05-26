@@ -359,7 +359,6 @@ global_init: {
    &var_init();
    &filetime_init();
    &propertyset_type_init();
-   $[=0;
 }
 
 #
